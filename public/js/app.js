@@ -18,13 +18,11 @@ define([
         },
         _initList: function() {
             var list = new List('.notes-container');
-
+            var filterRegExp = new RegExp(filter.get());
             list
                 .setItems(notes.getItems())
                 .setFilter(function(item) {
-                    var RE = new RegExp(filter.get());
-
-                    return RE.test(item.title);
+                    return filterRegExp.test(item.title);
                 })
                 .draw();
 
@@ -34,6 +32,8 @@ define([
                     .draw();
             });
             eventBus.on(filter.UPDATE_EVENT, function(filterString) {
+                filterRegExp = new RegExp(filterString);
+
                 list.draw();
             });
 
