@@ -1,0 +1,7 @@
+.notes-item .edit-show,
+.notes-item.edit .edit-hide {
+    display: none;
+}
+.notes-item.edit .edit-show {
+    display: inline-block;
+}

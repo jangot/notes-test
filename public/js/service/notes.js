@@ -26,6 +26,32 @@ define([
             eventBus.notify(this.UPDATE_EVENT, [notes]);
         },
 
+        edit: function(id, title, description) {
+            var notes = this.getItems();
+
+            var changed = false;
+            notes.forEach(function(item) {
+                if (item.id == id) {
+
+                    if (title !== undefined) {
+                        item.title = title;
+                        changed = true;
+                    }
+                    if (description !== undefined) {
+                        item.description = description;
+                        changed = true;
+                    }
+
+                    return false;
+                }
+            }.bind(this));
+
+            if (changed) {
+                putItems(notes);
+                eventBus.notify(this.UPDATE_EVENT, [notes]);
+            }
+        },
+
         getItems: function() {
             var notesItems = localStorage.getItem(STORAGE_KEY) || '[]';
 

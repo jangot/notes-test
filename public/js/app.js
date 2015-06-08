@@ -1,14 +1,20 @@
 define([
 
     'jquery',
+    'controller',
 
     'service/eventBus',
 
     'view/list',
+    'controller/list',
+
+    'view/add',
+    'view/filter',
+
     'service/notes',
     'service/filter'
 
-], function($, eventBus, List, notes, filter) {
+], function($, controller, eventBus, List, listController, Add, Filter, notes, filter) {
     return {
         start: function() {
             this
@@ -40,28 +46,14 @@ define([
             return this;
         },
         _initAdd: function() {
-            $('.addButton').click(function() {
-                var title = $('.addTitle').val();
-                var description = $('.addDescription').val();
-
-                notes.add(title, description);
-                filter.set('');
-
-                $('.addTitle').val('');
-                $('.addDescription').val('');
-            });
-
+            new Add('.add-panel');
             return this;
         },
         _initFilter: function() {
-            $('.filterInput').val(filter.get());
-            $('.filterButton').click(function() {
-                var filterString = $('.filterInput').val();
+            var filterView = new Filter('.filter-panel');
 
-                filter.set(filterString);
-            });
             eventBus.on(filter.UPDATE_EVENT, function(filterString) {
-                $('.filterInput').val(filterString);
+                filterView.setValue(filterString);
             });
 
             return this;

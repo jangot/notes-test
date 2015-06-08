@@ -7,15 +7,21 @@ define([
     return {
         listeners: {},
         on: function(name, fn) {
-            var eventIndex = null;
-            if ($.isFunction(fn)) {
-                this.listeners[name] = this.listeners[name] || [];
-                eventIndex = this.listeners[name].length;
-
-                this.listeners[name][eventIndex] = fn;
+            if (!$.isFunction(fn)) {
+                return function() {};
             }
 
+            this.listeners[name] = this.listeners[name] || [];
+            this.listeners[name].push(fn);
+
             return function off() {
+                var eventIndex = null;
+                this.listeners[name].forEach(function(itemFn, i) {
+                    if (itemFn === fn) {
+                        eventIndex = i;
+                        return false;
+                    }
+                });
                 if (eventIndex !== null) {
                     this.listeners[name].splice(eventIndex, 1);
                 }
