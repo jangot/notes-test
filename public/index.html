@@ -9,15 +9,44 @@
 </head>
 <body>
     <div class="container">
-        <input type="text"/>
-        <button class="set">set</button>
-        <button class="clear">clear</button>
-        <div class="result"></div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="list-group notes-container"></div>
+            </div>
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Фильтр</div>
+                    <div class="panel-body">
+                        <input type="text" class="filterInput"/>
+                        <button class="filterButton btn btn-primary">Ok</button>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Добавить</div>
+                    <div class="panel-body">
+                        <input type="text" class="addTitle"/>
+                        <input type="text" class="addDescription"/>
+                        <button class="addButton btn btn-primary">Ok</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
     <script>
-        require(['app'], function(app) {
-            app.start();
+        require(['jquery', 'app', 'bootstrap'], function($, app) {
+            $(function() {
+                app.start();
+            });
         });
+    </script>
+
+    <script id="template-item" type="text/template">
+        <div class="list-group-item">
+            <h4 class="list-group-item-heading"><%= title %></h4>
+            <p class="list-group-item-text"><%= description %></p>
+        </div>
     </script>
 </body>
 </html>
