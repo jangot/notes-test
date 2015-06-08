@@ -21,7 +21,7 @@ define([
                 id: generateId()
             });
 
-            this.putItems(notes);
+            putItems(notes);
 
             eventBus.notify(this.UPDATE_EVENT, [notes]);
         },
@@ -30,13 +30,14 @@ define([
             var notesItems = localStorage.getItem(STORAGE_KEY) || '[]';
 
             return JSON.parse(notesItems);
-        },
-        putItems: function(notesItems) {
-            notesItems = notesItems ? JSON.stringify(notesItems) : '[]';
-
-            localStorage.setItem(STORAGE_KEY, notesItems);
         }
     };
+
+    function putItems(notesItems) {
+        notesItems = notesItems ? JSON.stringify(notesItems) : '[]';
+
+        localStorage.setItem(STORAGE_KEY, notesItems);
+    }
 
     $(window).bind('storage', function (e) {
         e = e.originalEvent;
