@@ -6,28 +6,38 @@ define([
 
 ], function($, templete) {
 
-    var itemTemplate = templete('template-item');
-
     function List(element) {
         this.element = $(element);
+        this.items = [];
         this.filter = new RegExp('');
+        this.template = templete('template-item');
     }
 
     List.prototype = {
-        draw: function(items) {
-            var result = '';
+        setItems: function(items) {
+            this.items = items;
 
-            items.forEach(function(item) {
-                if (this.filter.test(item.title)) {
-                    result += itemTemplate(item);
-                }
-            }.bind(this));
-
-            this.element.html(result);
+            return this;
         },
         setFilter: function(value) {
             value = value || '';
             this.filter = new RegExp(value);
+
+            return this;
+        },
+        draw: function() {
+            var result = '';
+
+            this.items.forEach(function(item) {
+                if (this.filter.test(item.title)) {
+                    result += this.template(item);
+                }
+            }.bind(this));
+
+            // TODO improve insertion for optimisation and animation
+            this.element.html(result);
+
+            return this;
         }
     }
 
