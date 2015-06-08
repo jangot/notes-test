@@ -9,8 +9,9 @@ define([
     function List(element) {
         this.element = $(element);
         this.items = [];
-        this.filter = new RegExp('');
         this.template = templete('template-item');
+
+        this.setFilter();
     }
 
     List.prototype = {
@@ -19,9 +20,12 @@ define([
 
             return this;
         },
-        setFilter: function(value) {
-            value = value || '';
-            this.filter = new RegExp(value);
+        setFilter: function(fn) {
+            if ($.isFunction(fn)) {
+                this.filter = fn;
+            } else {
+                this.filter = function() {return true};
+            }
 
             return this;
         },
@@ -29,7 +33,7 @@ define([
             var result = '';
 
             this.items.forEach(function(item) {
-                if (this.filter.test(item.title)) {
+                if (this.filter(item)) {
                     result += this.template(item);
                 }
             }.bind(this));
@@ -39,7 +43,7 @@ define([
 
             return this;
         }
-    }
+    };
 
     return List;
 

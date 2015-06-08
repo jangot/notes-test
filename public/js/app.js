@@ -15,7 +15,11 @@ define([
 
             list
                 .setItems(notes.getItems())
-                .setFilter(filter.get())
+                .setFilter(function(item) {
+                    var RE = new RegExp(filter.get());
+
+                    return RE.test(item.title);
+                })
                 .draw();
             eventBus.on(notes.UPDATE_EVENT, function(items) {
                 list
@@ -23,9 +27,7 @@ define([
                     .draw();
             });
             eventBus.on(filter.UPDATE_EVENT, function(filterString) {
-                list
-                    .setFilter(filterString)
-                    .draw();
+                list.draw();
             });
 
             $('.addButton').click(function() {
