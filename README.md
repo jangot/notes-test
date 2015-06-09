@@ -1,8 +1,6 @@
 # Test notes
 
-An app needs server for correct notification localstoroge events
-The app have server by nodejs. Example for start  below.
-If you want use own server, you must specify the root directory `public` in this repository.
+An app needs a server for correct notification of the localstoroge events. The app has a server by nodejs. Example for start below. If you want to use your own server specify the root directory `public` in this repository.
 ## Install
 
     npm install
