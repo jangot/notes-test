@@ -5,26 +5,42 @@ define([
 
 ], function($, notes) {
 
-    return {
+    function ListController(view) {
+        this.view = view;
+    }
+
+    ListController.prototype = {
         '[data-action="startEdit"] click': function(e) {
             var id = $(e.target).data('id');
 
-            $('#' + id).addClass('edit');
+            this.view.startEdit(id);
         },
         '[data-action="cancelEdit"] click': function(e) {
-            var id = $(e.target).data('id');
-
-            $('#' + id).removeClass('edit');
+            this.view.endEdit();
         },
         '[data-action="save"] click': function(e) {
+            var editValue = this.view.getNoteEditValue();
+            if (!editValue) {
+                return;
+            }
+
+            var errors = {
+                title: !editValue.title,
+                description: !editValue.description
+            };
+            if (errors.title || errors.description) {
+                this.view.setErrors(errors);
+                return;
+            }
+
+            this.view.endEdit();
+            notes.edit(editValue.id, editValue.title, editValue.description);
+        },
+        '[data-action="remove"] click': function(e) {
             var id = $(e.target).data('id');
-
-            var el = $('#' + id);
-            var title = el.find('[name="title"]').val();
-            var description = el.find('[name="description"]').val();
-
-            el.removeClass('edit');
-            notes.edit(id, title, description);
+            notes.remove(id);
         }
     }
+
+    return ListController;
 });

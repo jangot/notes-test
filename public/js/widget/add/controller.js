@@ -7,20 +7,43 @@ define([
 
 ], function($, notes, filter) {
 
-    return {
-        '.addButton click': function(e) {
-            var titleInput = e.controller.container.find('.addTitle');
-            var descriptionInput = e.controller.container.find('.addDescription');
-
-            var title = titleInput.val();
-            var description = descriptionInput.val();
-
-            notes.add(title, description);
-
-            filter.set('');
-            titleInput.val('');
-            descriptionInput.val('');
-        }
+    function AddController(view) {
+        this.view = view;
     }
+
+    AddController.prototype = {
+        '.form-control keyup': function(e) {
+            if (e.keyCode !== 13) {
+                return;
+            }
+
+            createNote.apply(this, arguments);
+        },
+        '.addButton click': createNote
+    };
+
+    function createNote() {
+        var getValue = this.view.getValue();
+
+        var errors = {
+            title: !getValue.title,
+            description: !getValue.description
+        }
+
+        this.view.setErrors(errors);
+        if (errors.title || errors.description) {
+            return;
+        }
+
+        notes.add(getValue.title, getValue.description);
+
+        this.view.setValue({
+            title: '',
+            description: ''
+        });
+        filter.set('');
+    }
+
+    return AddController;
 
 });

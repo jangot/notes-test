@@ -2,15 +2,12 @@ define([
 
     'jquery',
 
-    'service/filter',
+    'service/filter'
 
-    'widget/filter/controller'
-
-], function($, filter, filterController) {
+], function($, filter) {
 
     function Filter(element) {
         this.element = $(element);
-        this.element.controller(filterController);
 
         this.setValue(filter.get());
     }
@@ -18,6 +15,9 @@ define([
     Filter.prototype = {
         setValue: function(filterString) {
             this.element.find('.filterInput').val(filterString);
+        },
+        getValue: function() {
+            return this.element.find('.filterInput').val();
         }
     };
 

@@ -52,6 +52,24 @@ define([
             }
         },
 
+        remove: function(id) {
+            var notes = this.getItems();
+
+            var wasDelete = false;
+            notes.forEach(function(item, i) {
+                if (item.id == id) {
+                    notes.splice(i, 1);
+                    wasDelete = true;
+                    return false;
+                }
+            }.bind(this));
+
+            if (wasDelete) {
+                putItems(notes);
+                eventBus.notify(this.UPDATE_EVENT, [notes]);
+            }
+        },
+
         getItems: function() {
             var notesItems = localStorage.getItem(STORAGE_KEY) || '[]';
 

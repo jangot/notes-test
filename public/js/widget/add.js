@@ -1,9 +1,15 @@
 define([
 
-    'widget/add/view'
+    'widget/add/view',
+    'widget/add/controller'
 
-], function(AddView) {
+], function(AddView, AddController) {
     return function(root) {
-        new AddView(root.find('.add-panel'));
-    }
-})
+        var element = root.find('.add-panel');
+        element
+            .widget({
+                controller: AddController,
+                view: new AddView(element)
+            });
+    };
+});

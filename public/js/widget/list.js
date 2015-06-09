@@ -3,13 +3,21 @@ define([
     'service/eventBus',
     'service/filter',
     'service/notes',
-    'widget/list/view'
+    'widget/list/view',
+    'widget/list/controller'
 
-], function(eventBus, filter, notes, ListView) {
+], function(eventBus, filter, notes, ListView, ListController) {
 
     return function(root) {
-        var view = new ListView(root.find('.notes-container'));
-        var filterRegExp = new RegExp(filter.get());
+        var element = root.find('.notes-container');
+        var view = new ListView(element);
+
+        element.widget({
+            controller: ListController,
+            view: view
+        });
+        
+        var filterRegExp = new RegExp(filter.get(), 'i');
         view
             .setItems(notes.getItems())
             .setFilter(function(item) {
@@ -23,7 +31,7 @@ define([
                 .draw();
         });
         eventBus.on(filter.UPDATE_EVENT, function(filterString) {
-            filterRegExp = new RegExp(filterString);
+            filterRegExp = new RegExp(filterString, 'i');
 
             view.draw();
         });

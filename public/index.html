@@ -19,17 +19,20 @@
                 <div class="panel panel-default filter-panel">
                     <div class="panel-heading">Фильтр</div>
                     <div class="panel-body">
-                        <input type="text" class="filterInput"/>
-                        <button class="filterButton btn btn-primary">Ok</button>
+                        <input type="text" placeholder="Введите заголовок" class="filterInput form-control"/>
                     </div>
                 </div>
 
                 <div class="panel panel-default add-panel">
                     <div class="panel-heading">Добавить</div>
                     <div class="panel-body">
-                        <input type="text" class="addTitle"/>
-                        <input type="text" class="addDescription"/>
-                        <button class="addButton btn btn-primary">Ok</button>
+                        <div class="form-group">
+                            <input type="text" placeholder="Заголовок" name="title" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="description" placeholder="Описание" rows="2"></textarea>
+                        </div>
+                        <button class="addButton btn btn-primary">Добавить</button>
                     </div>
                 </div>
 
@@ -45,19 +48,22 @@
     </script>
 
     <script id="template-item" type="text/template">
-        <div id="<%= id %>" class="list-group-item notes-item">
+        <div data-id="<%= id %>" class="list-group-item notes-item note-<%= id %>">
             <h4 class="list-group-item-heading">
                 <span class="edit-hide"><%= title %></span>
-                <input class="edit-show" value="<%= title %>" name="title"/>
+                <input class="edit-show form-control" value="<%= title %>" name="title"/>
             </h4>
             <p class="list-group-item-text">
                 <span class="edit-hide"><%= description %></span>
-                <input class="edit-show" value="<%= description %>" name="description"/>
+                <textarea class="edit-show form-control" name="description" placeholder="Описание" rows="2"><%= description %></textarea>
             </p>
+            <br>
             <div class="list-group-item-footer">
-                <button data-action="startEdit" data-id="<%= id %>" class="edit-hide btn btn-primary btn-sm">Edit</button>
-                <button data-action="cancelEdit" data-id="<%= id %>" class="edit-show btn btn-default btn-sm">Cancel</button>
-                <button data-action="save" data-id="<%= id %>" class="edit-show btn btn-primary btn-sm">Save</button>
+                <button data-action="startEdit" data-id="<%= id %>" class="edit-hide btn btn-primary btn-sm">Редактировать</button>
+                <button data-action="remove" data-id="<%= id %>" class="edit-hide btn btn-danger btn-sm">Удалить</button>
+
+                <button data-action="save" data-id="<%= id %>" class="edit-show btn btn-primary btn-sm">Сохранить</button>
+                <button data-action="cancelEdit" data-id="<%= id %>" class="edit-show btn btn-default btn-sm">Отмена</button>
             </div>
         </div>
     </script>

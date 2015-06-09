@@ -1,10 +1,9 @@
 define([
 
     'jquery',
-    'lib/custom/template',
-    'widget/list/controller'
+    'lib/custom/template'
 
-], function($, templete, listController) {
+], function($, templete) {
 
     function List(element) {
         this.element = $(element);
@@ -12,8 +11,6 @@ define([
         this.template = templete('template-item');
 
         this.setFilter();
-
-        this.element.controller(listController)
     }
 
     List.prototype = {
@@ -36,7 +33,7 @@ define([
 
             this.items.forEach(function(item) {
                 if (this.filter(item)) {
-                    result += this.template(item);
+                    result = (this.template(item) + result);
                 }
             }.bind(this));
 
@@ -44,6 +41,48 @@ define([
             this.element.html(result);
 
             return this;
+        },
+        startEdit: function(id) {
+            this.endEdit();
+            this.element
+                .find('.note-' + id)
+                .addClass('edit');
+        },
+        endEdit: function() {
+            this.element
+                .find('.edit')
+                .removeClass('edit')
+                .find('.has-error')
+                .removeClass('has-error');
+        },
+        getNoteEditValue: function() {
+            var el = this.element.find('.edit');
+
+            if (el.length === 0) {
+                return null;
+            }
+
+            var id = el.data('id');
+            return {
+                id: id,
+                title: el.find('[name="title"]').val(),
+                description : el.find('[name="description"]').val()
+            }
+        },
+        setErrors: function(errors) {
+            var editElement = this.element.find('.edit');
+            if (editElement.length === 0) {
+                return;
+            }
+
+            editElement
+                .find('.has-error')
+                .removeClass('has-error');
+            for (var name in errors) {
+                if (errors[name]) {
+                    editElement.find('[name="'+ name +'"]').parent().addClass('has-error');
+                }
+            }
         }
     };
 
