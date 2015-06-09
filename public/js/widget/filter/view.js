@@ -2,15 +2,17 @@ define([
 
     'jquery',
 
-    '../controller',
-    '../controller/filter'
+    'service/filter',
 
-], function($, controller, filterController) {
+    './controller'
+
+], function($, filter, filterController) {
 
     function Filter(element) {
-        controller(element, filterController)();
-
         this.element = $(element);
+        this.element.controller(filterController);
+
+        this.setValue(filter.get());
     }
 
     Filter.prototype = {

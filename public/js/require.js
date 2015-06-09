@@ -6,6 +6,7 @@ requirejs.config({
         lodash: ''
     },
     shim: {
+        app: ['bootstrap', 'lib/custom/controller'],
         jquery: {
             exports: 'jQuery'
         },

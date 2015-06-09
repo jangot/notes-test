@@ -1,7 +1,7 @@
 define([
 
     'jquery',
-    '../service/notes'
+    '../../service/notes'
 
 ], function($, notes) {
 

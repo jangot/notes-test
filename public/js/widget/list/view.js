@@ -2,20 +2,19 @@ define([
 
     'jquery',
 
-    '../controller',
-    '../lib/custom/template',
-    '../controller/list'
+    '../../lib/custom/template',
+    './controller'
 
-], function($, controller, templete, listController) {
+], function($, templete, listController) {
 
     function List(element) {
-        controller(element, listController);
-
         this.element = $(element);
         this.items = [];
         this.template = templete('template-item');
 
         this.setFilter();
+
+        this.element.controller(listController)
     }
 
     List.prototype = {
