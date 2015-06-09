@@ -5,11 +5,11 @@ define([
 
 ], function(AddView, AddController) {
     return function(root) {
-        var element = root.find('.add-panel');
-        element
+        root
+            .find('.add-panel')
             .widget({
                 controller: AddController,
-                view: new AddView(element)
+                view: AddView
             });
     };
 });

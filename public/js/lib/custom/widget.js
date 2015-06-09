@@ -4,13 +4,13 @@ define([
 
 ], function($) {
 
-    $.fn.widget = function(actions) {
-        var Controller = actions.controller;
-        var view = actions.view || {};
+    $.fn.widget = function(params) {
+        var Controller = params.controller || function() {};
+        var View = params.view || function() {};
 
         this.each(function() {
             var element = $(this);
-
+            var view = new View(element);
             var actions = new Controller(view);
 
             for (var actionName in actions) {
@@ -22,6 +22,8 @@ define([
                 }
             }
 
+            element.data('view', view);
+
             function setAction(selector, event, actionName) {
                 element.delegate(selector, event, function(e) {
                     e.widget = {
@@ -31,8 +33,7 @@ define([
                 });
             }
         });
+        
+        return this;
     }
-
-
-
 });

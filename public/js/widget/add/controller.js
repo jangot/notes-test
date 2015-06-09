@@ -7,17 +7,19 @@ define([
 
 ], function($, notes, filter) {
 
+    var ENTER_KEY_CODE = 13;
+
     function AddController(view) {
         this.view = view;
     }
 
     AddController.prototype = {
         '.form-control keyup': function(e) {
-            if (e.keyCode !== 13) {
+            if (e.keyCode !== ENTER_KEY_CODE) {
                 return;
             }
 
-            createNote.apply(this, arguments);
+            return createNote.apply(this, arguments);
         },
         '.addButton click': createNote
     };

@@ -8,15 +8,14 @@ define([
 ], function(eventBus, filter, Filter, FilterController) {
     return function(root) {
         var element = root.find('.filter-panel');
-        var filterView = new Filter(element);
 
         element.widget({
             controller: FilterController,
-            view: filterView
+            view: Filter
         });
 
         eventBus.on(filter.UPDATE_EVENT, function(filterString) {
-            filterView.setValue(filterString);
+            element.data('view').setValue(filterString);
         });
     }
 });
