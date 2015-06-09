@@ -3,7 +3,7 @@ define([
     'widget/add/view'
 
 ], function(AddView) {
-    return function() {
-        new AddView('.add-panel');
+    return function(root) {
+        new AddView(root.find('.add-panel'));
     }
 })

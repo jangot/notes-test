@@ -7,8 +7,8 @@ define([
 
 ], function(eventBus, filter, notes, ListView) {
 
-    return function() {
-        var view = new ListView('.notes-container');
+    return function(root) {
+        var view = new ListView(root.find('.notes-container'));
         var filterRegExp = new RegExp(filter.get());
         view
             .setItems(notes.getItems())
