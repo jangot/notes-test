@@ -4,7 +4,7 @@ define([
 
     'service/filter',
 
-    './controller'
+    'widget/filter/controller'
 
 ], function($, filter, filterController) {
 

@@ -2,7 +2,7 @@ define([
 
     'jquery',
 
-    './controller'
+    'widget/add/controller'
 
 ], function($, addController) {
 

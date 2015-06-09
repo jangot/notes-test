@@ -1,8 +1,8 @@
 define([
 
-    '../service/eventBus',
-    '../service/filter',
-    './filter/view'
+    'service/eventBus',
+    'service/filter',
+    'widget/filter/view'
 
 ], function(eventBus, filter, Filter) {
     return function() {

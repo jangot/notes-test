@@ -1,6 +1,6 @@
 define([
 
-    './add/view'
+    'widget/add/view'
 
 ], function(AddView) {
     return function() {

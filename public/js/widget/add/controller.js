@@ -9,8 +9,8 @@ define([
 
     return {
         '.addButton click': function(e) {
-            var titleInput = e.container.find('.addTitle');
-            var descriptionInput = e.container.find('.addDescription');
+            var titleInput = e.controller.container.find('.addTitle');
+            var descriptionInput = e.controller.container.find('.addDescription');
 
             var title = titleInput.val();
             var description = descriptionInput.val();

@@ -1,9 +1,8 @@
 define([
 
     'jquery',
-
-    '../../lib/custom/template',
-    './controller'
+    'lib/custom/template',
+    'widget/list/controller'
 
 ], function($, templete, listController) {
 

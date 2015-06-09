@@ -1,9 +1,9 @@
 define([
 
-    '../service/eventBus',
-    '../service/filter',
-    '../service/notes',
-    './list/view'
+    'service/eventBus',
+    'service/filter',
+    'service/notes',
+    'widget/list/view'
 
 ], function(eventBus, filter, notes, ListView) {
 
