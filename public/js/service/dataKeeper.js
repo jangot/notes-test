@@ -1,10 +1,11 @@
 define([
 
+    'jquery',
     'service/eventBus',
     'lib/custom/util',
     'lib/custom/id'
 
-], function(eventBus, util, getId) {
+], function($, eventBus, util, getId) {
 
     var UPDATE_EVENT = 'data:update';
 
@@ -14,7 +15,7 @@ define([
                 doc.id = getId();
             }
             var collection = this.getCollection(collectionName);
-            var index = this._getDocumentIndex(doc, collection)
+            var index = this._getDocumentIndex(doc, collection);
 
             collection[index] = doc;
 

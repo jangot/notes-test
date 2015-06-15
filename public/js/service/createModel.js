@@ -2,12 +2,11 @@ define([
 
     'service/dataKeeper',
     'lib/custom/util',
-    'lib/custom/id',
-    'service/eventBus'
+    'lib/custom/id'
 
-], function(dataKeeper, util, getId, eventBus) {
+], function(dataKeeper, util, getId) {
 
-    function createModel(name, fields) {
+    return function createModel(name, fields) {
         fields = fields || [];
         fields.push('id');
 
@@ -51,8 +50,4 @@ define([
 
         return Model;
     }
-
-
-
-    return createModel;
 });
