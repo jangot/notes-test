@@ -1,21 +1,32 @@
 define([
 
     'service/eventBus',
-    'service/filter',
+    'models/filter',
     'widget/filter/view',
     'widget/filter/controller'
 
-], function(eventBus, filter, Filter, FilterController) {
+], function(eventBus, Filter, FilterView, FilterController) {
     return function(root) {
         var element = root.find('.filter-panel');
 
         element.widget({
             controller: FilterController,
-            view: Filter
+            view: FilterView
         });
 
-        eventBus.on(filter.UPDATE_EVENT, function(filterString) {
-            element.data('view').setValue(filterString);
+        setFilter();
+        eventBus.on('data:update', function(collectionName) {
+            if (collectionName === 'filters') {
+                setFilter()
+            }
         });
+
+        function setFilter() {
+            var filtersList = Filter.getCollection();
+            if (!filtersList || filtersList.length === 0) {
+                filtersList = [{pattern: ''}];
+            }
+            element.data('view').setValue(filtersList[0].pattern);
+        }
     }
 });

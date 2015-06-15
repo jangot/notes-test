@@ -1,12 +1,12 @@
 define([
 
     'service/eventBus',
-    'service/filter',
-    'service/notes',
     'widget/list/view',
-    'widget/list/controller'
+    'widget/list/controller',
+    'models/note',
+    'models/filter'
 
-], function(eventBus, filter, notes, ListView, ListController) {
+], function(eventBus, ListView, ListController, Note, Filter) {
 
     return function(root) {
         var element = root.find('.notes-container');
@@ -16,27 +16,26 @@ define([
             view: ListView
         });
         
-        var filterRegExp = new RegExp(filter.get(), 'i');
+        var filters = Filter.getCollection();
         element
             .data('view')
-            .setItems(notes.getItems())
-            .setFilter(function(item) {
-                return filterRegExp.test(item.title);
-            })
+            .setItems(Note.getCollection())
+            .setFilters(Filter.getCollection())
             .draw();
 
-        eventBus.on(notes.UPDATE_EVENT, function(items) {
-            element
-                .data('view')
-                .setItems(items)
-                .draw();
-        });
-        eventBus.on(filter.UPDATE_EVENT, function(filterString) {
-            filterRegExp = new RegExp(filterString, 'i');
-
-            element
-                .data('view')
-                .draw();
+        eventBus.on('data:update', function(collectionName) {
+            if (collectionName === 'notes') {
+                element
+                    .data('view')
+                    .setItems(Note.getCollection())
+                    .draw();
+            }
+            if (collectionName === 'filters') {
+                element
+                    .data('view')
+                    .setFilters(Filter.getCollection())
+                    .draw();
+            }
         });
     }
 

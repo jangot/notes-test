@@ -1,9 +1,8 @@
 define([
 
-    'jquery',
-    'service/notes'
+    'jquery'
 
-], function($, notes) {
+], function($) {
 
     function ListController(view) {
         this.view = view;
@@ -33,12 +32,20 @@ define([
                 return;
             }
 
-            this.view.endEdit();
-            notes.edit(editValue.id, editValue.title, editValue.description);
+            var note = this.view.element
+                .find('.note-'+ editValue.id)
+                .data('note');
+
+            note.title = editValue.title;
+            note.description = editValue.description;
+            note.save();
         },
         '[data-action="remove"] click': function(e) {
             var id = $(e.target).data('id');
-            notes.remove(id);
+            this.view.element
+                .find('.note-'+ id)
+                .data('note')
+                .remove();
         }
     }
 

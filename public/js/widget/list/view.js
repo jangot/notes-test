@@ -8,9 +8,8 @@ define([
     function List(element) {
         this.element = $(element);
         this.items = [];
+        this.filters = [];
         this.template = templete('template-item');
-
-        this.setFilter();
     }
 
     List.prototype = {
@@ -19,27 +18,21 @@ define([
 
             return this;
         },
-        setFilter: function(fn) {
-            if ($.isFunction(fn)) {
-                this.filter = fn;
-            } else {
-                this.filter = function() {return true};
-            }
+        setFilters: function(filters) {
+            this.filters = filters || [];
 
             return this;
         },
         draw: function() {
-            var result = '';
+            this.element.html('');
 
             this.items.forEach(function(item) {
-                if (this.filter(item)) {
-                    result = (this.template(item) + result);
+                if (this._canDraw(item)) {
+                    var element = $(this.template(item));
+                    element.data('note', item);
+                    this.element.append(element);
                 }
             }.bind(this));
-
-            // TODO improve insertion for optimisation and animation
-            this.element.html(result);
-
             return this;
         },
         startEdit: function(id) {
@@ -83,6 +76,18 @@ define([
                     editElement.find('[name="'+ name +'"]').parent().addClass('has-error');
                 }
             }
+        },
+        _canDraw: function(item) {
+            var result = true;
+            this.filters.forEach(function(filter) {
+                var RE = new RegExp(filter.pattern, 'i');
+                if (!RE.test(item.title)) {
+                    result = false;
+                    return false;
+                }
+            });
+            
+            return result;
         }
     };
 

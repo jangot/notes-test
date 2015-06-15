@@ -2,10 +2,10 @@ define([
 
     'jquery',
 
-    'service/notes',
-    'service/filter'
+    'models/note'
 
-], function($, notes, filter) {
+], function($, Note) {
+
 
     var ENTER_KEY_CODE = 13;
 
@@ -37,13 +37,17 @@ define([
             return;
         }
 
-        notes.add(getValue.title, getValue.description);
+        var note = new Note({
+            title: getValue.title,
+            description: getValue.description
+        });
+
+        note.save();
 
         this.view.setValue({
             title: '',
             description: ''
         });
-        filter.set('');
     }
 
     return AddController;

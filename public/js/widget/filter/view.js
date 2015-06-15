@@ -1,15 +1,13 @@
 define([
 
-    'jquery',
+    'jquery'
 
-    'service/filter'
-
-], function($, filter) {
+], function($) {
 
     function Filter(element) {
         this.element = $(element);
 
-        this.setValue(filter.get());
+        this.setValue('');
     }
 
     Filter.prototype = {

@@ -13,6 +13,7 @@ define([
 
             widgetList(rootElement);
             widgetAdd(rootElement);
+
             widgetFilter(rootElement);
         }
     }

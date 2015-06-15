@@ -1,26 +1,28 @@
 define([
 
     'jquery',
+    'models/filter'
 
-    'service/filter'
-
-], function($, filter) {
+], function($, Filter) {
 
     function FilterController(view) {
         this.view = view;
     }
 
     FilterController.prototype = {
-        '.filterButton click': function(e) {
-            var filterString = this.view.getValue();
+        '.filterButton click': setNewFilter,
+        '.filterInput keyup': setNewFilter
+    };
 
-            filter.set(filterString);
-        },
-        '.filterInput keyup': function(e) {
-            var filterString = this.view.getValue();
+    function setNewFilter() {
+        var filterString = this.view.getValue();
 
-            filter.set(filterString);
-        }
+        Filter.clearCollection();
+
+        var filter = new Filter({
+            pattern: filterString
+        });
+        filter.save();
     }
 
     return FilterController;
